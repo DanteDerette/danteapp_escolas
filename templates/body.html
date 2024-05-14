@@ -1,39 +1,22 @@
-<body>
-	<p>
-		APP para Escolas
-	</p>
-	<input type='text' id="nome_aluno"/>
-	<button id='btn_salvar_aluno'>Salvar</button>
-	<div id='paragrafo_alunos'>
-	
+<body class='container-fluid'>
+	<div class='row' id='main'>
+		{% include 'navegacao_inicio/navegacao.html' %}
+	</div>
+	<div class='row' id='footer'>
+		<div class='col'></div>
+		<div class='col'>
+			<button class='w-100'>Início</button>
+		</div>
+		<div class='col'></div>
 	</div>
 </body>
-<script>
-	$( document ).ready(function() {
-		
-		// AO CLICAR DO BOTÃO
-		$( "#btn_salvar_aluno" ).on( "click", function() {		  
-		  $.ajax({
-			url: '/salvar_aluno',
-			type: 'POST',
-			data: JSON.stringify({nome: $('#nome_aluno').val()}),
-			contentType: "application/json",
-			dataType: "json",
-		  })		  
-		});
-		
-		// LEITURA DOS DADOS
-		$.ajax({
-			url: '/ler_todos_alunos',
-			type: 'POST'			
-		}).done(function (retorno){
-			
-			var dados = retorno.dados
-			dados.forEach((item) => {
-				$('#paragrafo_alunos').append(item)
-				$('#paragrafo_alunos').append('<br>')
-			})
-		})
-		
-	});
-</script>
+<style>
+	#main{
+		height: 90dvh;
+	}
+	
+	#footer{
+		height: 10dvh;
+	}
+</style>
+
