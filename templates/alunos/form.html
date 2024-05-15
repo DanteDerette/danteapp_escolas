@@ -1,0 +1,61 @@
+<div class='row'>
+	<div class='col'>
+		<h1>
+			Formulário do Aluno
+		</h1>
+	</div>
+</div>
+
+<script>
+	function gera_input(item){
+		var row = document.createElement('div')
+		row.className = 'row mt-1'
+		
+		var col = document.createElement('div')
+		col.className = 'col'
+		
+		var label = document.createElement('label')
+		label.innerHTML = item.label_innerHTML
+		
+		var input = document.createElement('input')
+		input.type = item.type
+		input.className = 'form-control'
+		
+		col.appendChild(label)
+		col.appendChild(input)
+		row.appendChild(col)
+		$('#form_aluno').append(row)
+	}
+	
+	
+	$( document ).ready(function() {
+		var meus_inputs = [
+			{
+				label_innerHTML: 'Nome',
+				type: 'text'
+			},
+			{
+				label_innerHTML: 'Sobrenome',
+				type: 'text'
+			},
+			{
+				label_innerHTML: 'Nome do Pai',
+				type: 'text'
+			},
+			{
+				label_innerHTML: 'Nome da Mãe',
+				type: 'text'
+			},
+			{
+				label_innerHTML: 'Data de Nascimento',
+				type: 'date'
+			}
+		]
+		
+		meus_inputs.forEach((item)=>{
+			gera_input(item)
+		})
+		
+		
+	})	
+</script>
