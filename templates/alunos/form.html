@@ -1,13 +1,55 @@
-<div class='row'>
+<div class='row sticky_element bg-white pt-2 pb-2 mt-2 mb-2'>
 	<div class='col'>
 		<h1>
 			Formulário do Aluno
 		</h1>
 	</div>
 </div>
+<style>
+	.sticky_element{
+		position: -webkit-sticky; /* Safari */
+		position: sticky;
+		top: 0;
+	}
+</style>
+
+<div class='row mt-1'>
+	<div class='col'>
+		<h5>
+			Dados Gerais
+		</h5>
+	</div>
+</div>
+
+<div class='row border-top'>
+	<div class='col'>
+		&nbsp;
+	</div>
+</div>
+
+<div id='form_aluno_parte_1'></div>
+
+<div class='row mt-2'>
+	<div class='col'>
+		<h5>
+			Endereço
+		</h5>
+	</div>
+</div>
+<div class='row border-top'>
+	<div class='col'>
+		&nbsp;
+	</div>
+</div>
+<div id='form_aluno_parte_2'></div>
+<div class='row'>
+	<div class='col'>
+		&nbsp;
+	</div>
+</div>
 
 <script>
-	function gera_input(item){
+	function gera_input(item, parent){
 		var row = document.createElement('div')
 		row.className = 'row mt-1'
 		
@@ -24,38 +66,61 @@
 		col.appendChild(label)
 		col.appendChild(input)
 		row.appendChild(col)
-		$('#form_aluno').append(row)
+		$(parent).append(row)
 	}
 	
 	
 	$( document ).ready(function() {
-		var meus_inputs = [
-			{
+		var meus_inputs = [{
 				label_innerHTML: 'Nome',
 				type: 'text'
-			},
-			{
+			},{
 				label_innerHTML: 'Sobrenome',
 				type: 'text'
-			},
-			{
+			},{
 				label_innerHTML: 'Nome do Pai',
 				type: 'text'
-			},
-			{
+			},{
 				label_innerHTML: 'Nome da Mãe',
 				type: 'text'
-			},
-			{
+			},{
 				label_innerHTML: 'Data de Nascimento',
 				type: 'date'
+			}, {
+				label_innerHTML: 'Telefone',
+				type: 'text'
+			}, {
+				label_innerHTML: 'CPF',
+				type: 'text'
 			}
-		]
+			]
 		
 		meus_inputs.forEach((item)=>{
-			gera_input(item)
+			gera_input(item, '#form_aluno_parte_1')
 		})
 		
+		var meus_inputs = [{
+				label_innerHTML: 'Logradouro',
+				type: 'text'
+			},{
+				label_innerHTML: 'Rua',
+				type: 'text'
+			},{
+				label_innerHTML: 'Bairro',
+				type: 'text'
+			},{
+				label_innerHTML: 'Cidade',
+				type: 'text'
+			},{
+				label_innerHTML: 'Estado',
+				type: 'text'
+			},{
+				label_innerHTML: 'CEP',
+				type: 'text'
+			}]
 		
+		meus_inputs.forEach((item)=>{
+			gera_input(item, '#form_aluno_parte_2')
+		})
 	})	
 </script>
