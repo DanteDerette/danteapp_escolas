@@ -6,9 +6,31 @@
 	</div>
 	<div class='col'></div>
 	<div class='col'>
-		<button class='btn btn-primary w-100 h-100'>
-			Salvar
+		<button class='btn btn-primary w-100 h-100' onclick='salva_aluno()'>
+			Salvar_2
 		</button>
 	</div>
 </div>
 
+<script>
+	function salva_aluno(){
+		var input_aluno = document.querySelectorAll('.input_aluno')
+		var obj_para_lancar = {}
+		
+		input_aluno.forEach((input) => {
+			obj_para_lancar[input.name] = input.value
+		})
+		
+		console.log(obj_para_lancar)
+		
+		$.ajax({
+			url: '/salvar_aluno',
+			type: 'POST',
+			data: JSON.stringify(obj_para_lancar),
+			contentType: "application/json",
+			dataType: "json",
+		})	
+		  
+
+	}
+</script>

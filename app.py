@@ -10,13 +10,45 @@ def index():
 @app.route("/salvar_aluno", methods=['POST'])
 def salvar_aluno():
     dict = request.get_json()
-    nome = dict['nome']
+    print(dict)
+    
     
     conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
     cursor = conn.cursor()
-    SQL = """ INSERT INTO alunos(nome) VALUES(?);"""
+    SQL = """ INSERT INTO
+        alunos (
+            nome,
+            sobre_nome,
+            nome_do_pai,
+            nome_da_mae,
+            data_de_nascimento,
+            telefone,
+            cpf,
+            logradouro,
+            rua,
+            bairro,
+            cidade,
+            estado,
+            cep            
+        ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);"""
     
-    cursor.execute(SQL, (nome,))
+    cursor.execute(SQL,
+        (
+            dict['nome'],
+            dict['sobre_nome'],
+            dict['nome_do_pai'],
+            dict['nome_da_mae'],
+            dict['data_de_nascimento'],
+            dict['telefone'],
+            dict['cpf'],
+            dict['logradouro'],
+            dict['rua'],
+            dict['bairro'],
+            dict['cidade'],
+            dict['estado'],
+            dict['cep'],
+        )
+    )
     conn.commit()
     conn.close()
     return jsonify(retorno="Sucesso")

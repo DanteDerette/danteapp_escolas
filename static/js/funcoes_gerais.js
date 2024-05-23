@@ -10,7 +10,9 @@ function gera_input(item, parent){
 	
 	var input = document.createElement('input')
 	input.type = item.type
+	input.name = item.name	
 	input.className = 'form-control'
+	input.classList.add(item.input_class)
 	
 	col.appendChild(label)
 	col.appendChild(input)
