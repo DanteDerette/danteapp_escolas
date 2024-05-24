@@ -29,6 +29,10 @@
 			dados.forEach((item) => {
 				var tr = document.createElement('tr')
 				
+				tr.onclick = () => {
+					navegar_table_para_form_aluno()
+				}
+				
 				var td = document.createElement('td')
 				var string_celula = "Nome:" + item[1]
 				string_celula += "<br>"

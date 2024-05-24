@@ -1,6 +1,8 @@
 <div class='row h-75 mt-2'>
 	<div class='col'>
-		<button class='btn btn-danger w-100 h-100'>
+		<button
+			onclick='navegar_form_para_table_aluno()'
+			class='btn btn-outline-danger w-100 h-100'>
 			Cancelar
 		</button>
 	</div>
@@ -8,7 +10,7 @@
 	<div class='col'>
 		<button
 			id='btn_salvando_aluno'
-			class="btn btn-primary"
+			class="btn btn-outline-primary"
 			style='display: none' disabled>
 		  <span
 			class="spinner-grow spinner-grow-sm"
@@ -19,7 +21,7 @@
 		
 		<button
 			id='btn_salvar_aluno'
-			class='btn btn-primary w-100 h-100'
+			class='btn btn-outline-primary w-100 h-100'
 			onclick='salva_aluno()'>
 			Salvar
 		</button>
@@ -27,6 +29,10 @@
 </div>
 
 <script>
+ 	function navegar_form_para_table_aluno(){
+		$('.form_aluno').hide()
+		$('.table_aluno').show()
+	}
 	function salva_aluno(){
 		
 		$('#btn_salvar_aluno').hide()
