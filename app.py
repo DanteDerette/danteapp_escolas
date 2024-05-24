@@ -61,6 +61,7 @@ def ler_todos_alunos():
     
     cursor.execute(SQL)
     dados = cursor.fetchall()
+    print(dados)
     
     conn.close()
     return jsonify(dados=dados)

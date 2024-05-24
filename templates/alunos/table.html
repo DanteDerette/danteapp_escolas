@@ -1,0 +1,46 @@
+<!-- <div class='row sticky_element bg-white pt-2 pb-2 mt-2 mb-2'>
+	<div class='col'>
+		<h1>
+			
+		</h1>
+	</div>
+</div> -->
+<div class='row mt-2'>
+	<div class='col'>
+		<table class='table'>
+			<thead class='sticky_element bg-white'>
+				<tr>
+					<th style='text-align: center;'>Tabela dos Aluno</th>
+				</tr>
+			</thead>
+			<tbody id='tbody_aluno'></tbody>
+		</table>
+	</div>
+</div>
+<script>
+	$( document ).ready(function() {
+		// LEITURA DOS DADOS
+		$.ajax({
+			url: '/ler_todos_alunos',
+			type: 'POST'			
+		}).done(function (retorno){
+			
+			var dados = retorno.dados
+			dados.forEach((item) => {
+				var tr = document.createElement('tr')
+				
+				var td = document.createElement('td')
+				var string_celula = "Nome:" + item[1]
+				string_celula += "<br>"
+				string_celula += "Sobrenome:" + item[2]
+				string_celula += "<br>"
+				string_celula += "CPF:" + item[7]
+				
+				td.innerHTML = string_celula
+				tr.appendChild(td)
+				$('#tbody_aluno').append(tr)
+				
+			})
+		})
+	});
+</script>

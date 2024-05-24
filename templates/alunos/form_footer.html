@@ -6,14 +6,33 @@
 	</div>
 	<div class='col'></div>
 	<div class='col'>
-		<button class='btn btn-primary w-100 h-100' onclick='salva_aluno()'>
-			Salvar_2
+		<button
+			id='btn_salvando_aluno'
+			class="btn btn-primary"
+			style='display: none' disabled>
+		  <span
+			class="spinner-grow spinner-grow-sm"
+			role="status"
+			aria-hidden="true"></span>
+		  Salvando
+		</button>
+		
+		<button
+			id='btn_salvar_aluno'
+			class='btn btn-primary w-100 h-100'
+			onclick='salva_aluno()'>
+			Salvar
 		</button>
 	</div>
 </div>
 
 <script>
 	function salva_aluno(){
+		
+		$('#btn_salvar_aluno').hide()
+		$('#btn_salvando_aluno').show()
+		
+		
 		var input_aluno = document.querySelectorAll('.input_aluno')
 		var obj_para_lancar = {}
 		
@@ -21,7 +40,6 @@
 			obj_para_lancar[input.name] = input.value
 		})
 		
-		console.log(obj_para_lancar)
 		
 		$.ajax({
 			url: '/salvar_aluno',
@@ -29,7 +47,10 @@
 			data: JSON.stringify(obj_para_lancar),
 			contentType: "application/json",
 			dataType: "json",
-		})	
+		}).done(function (data){
+			$('#btn_salvar_aluno').show()
+			$('#btn_salvando_aluno').hide()
+		})
 		  
 
 	}
