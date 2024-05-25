@@ -66,4 +66,26 @@ def ler_todos_alunos():
     conn.close()
     return jsonify(dados=dados)
 
+@app.route("/ler_aluno_especifico", methods=['POST'])
+def ler_aluno_especifico():
+    dict = request.get_json()
+    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    cursor = conn.cursor()
+    SQL = """ SELECT * FROM alunos WHERE id=""" + str(dict['id']) + """;"""
+    cursor.execute(SQL)
+    dados = cursor.fetchall()
+    
+    SQL = """ PRAGMA table_info(alunos);"""
+    cursor.execute(SQL)
+    cabecalho = cursor.fetchall()
+    
+        
+    conn.close()
+    return jsonify(
+        dados=dados,
+        cabecalho=cabecalho
+    )
+
+
+
 app.run(debug=True, host='0.0.0.0')

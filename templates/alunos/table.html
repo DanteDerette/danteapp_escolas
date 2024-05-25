@@ -18,6 +18,40 @@
 	</div>
 </div>
 <script>
+	function alterar_aluno(id_clicado){
+		$.ajax({
+			url: '/ler_aluno_especifico',
+			type: 'POST',
+			data: JSON.stringify({id: id_clicado}),
+			contentType: "application/json",
+			dataType: "json",
+		}).done(function (data){
+			capta_e_direciona_dados(data)			
+			navegar_table_para_form_aluno()			
+		})
+	}
+	function capta_e_direciona_dados(data){
+		var dados_para_escrever = data.dados[0]
+		var cabecalho = data.cabecalho
+		var input_aluno = document.querySelectorAll('.input_aluno')
+			
+		// Loop em todo o cabecalho
+		cabecalho.forEach((item, index) => {
+			// passar por todos os elementos
+			// com a classe: input_aluno
+			input_aluno.forEach((item_2, index_2) => {
+				// Perguntar 1 por 1
+				// Se o nome do elemento é igual
+				// Ao nome do cabecalho
+				if(item_2.name == item[1]){	
+					// Determina o valor do elemento
+					// De acordo com o que voltou do Flask
+					item_2.value = dados_para_escrever[index]
+				}
+			})
+		})
+		
+	}
 	$( document ).ready(function() {
 		// LEITURA DOS DADOS
 		$.ajax({
@@ -30,7 +64,7 @@
 				var tr = document.createElement('tr')
 				
 				tr.onclick = () => {
-					navegar_table_para_form_aluno()
+					alterar_aluno(item[0])
 				}
 				
 				var td = document.createElement('td')
