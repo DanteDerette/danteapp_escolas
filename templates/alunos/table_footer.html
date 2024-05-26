@@ -27,5 +27,12 @@
 	function navegar_table_para_form_aluno(){
 		$('.form_aluno').show()
 		$('.table_aluno').hide()
+		
+		document
+			.querySelectorAll('.input_aluno')
+			.forEach((item) => {
+				item.value = ''
+			})
+		
 	}
 </script>

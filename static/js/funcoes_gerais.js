@@ -12,6 +12,7 @@ function gera_input(item, parent){
 	input.type = item.type
 	input.name = item.name	
 	input.className = 'form-control'
+	input.autocomplete = 'one-time-code'
 	input.classList.add(item.input_class)
 	
 	col.appendChild(label)

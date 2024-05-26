@@ -26,9 +26,9 @@
 			contentType: "application/json",
 			dataType: "json",
 		}).done(function (data){
-			capta_e_direciona_dados(data)			
 			navegar_table_para_form_aluno()			
-		})
+			capta_e_direciona_dados(data)
+			})
 	}
 	function capta_e_direciona_dados(data){
 		var dados_para_escrever = data.dados[0]
@@ -52,12 +52,14 @@
 		})
 		
 	}
-	$( document ).ready(function() {
+	
+	function gera_table_aluno(){
 		// LEITURA DOS DADOS
 		$.ajax({
 			url: '/ler_todos_alunos',
 			type: 'POST'			
 		}).done(function (retorno){
+			$('#tbody_aluno').html('')
 			
 			var dados = retorno.dados
 			dados.forEach((item) => {
@@ -80,5 +82,9 @@
 				
 			})
 		})
+	}
+	
+	$( document ).ready(function() {
+		gera_table_aluno()
 	});
 </script>
