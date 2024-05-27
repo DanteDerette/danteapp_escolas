@@ -105,6 +105,18 @@ def ler_todos_alunos():
     conn.close()
     return jsonify(dados=dados)
 
+@app.route("/exclui_aluno", methods=['POST'])
+def exclui_aluno():
+    dict = request.get_json()
+    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    cursor = conn.cursor()
+    SQL = """ DELETE FROM alunos WHERE id=""" + str(dict['id']) + """;"""
+    cursor.execute(SQL)
+    conn.commit()
+    
+    conn.close()
+    return jsonify(x=0)
+
 @app.route("/ler_aluno_especifico", methods=['POST'])
 def ler_aluno_especifico():
     dict = request.get_json()

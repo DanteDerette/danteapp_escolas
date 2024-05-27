@@ -6,10 +6,19 @@
 	</div>
 </div>
 <div class='row mt-1'>
-	<div class='col'>
+	<div class='col-10'>
 		<h5>
 			Dados Gerais
 		</h5>
+	</div>
+	<div class='col-2'>
+		<button
+			class="btn btn-danger w-100"
+			onclick="$('#msg_confirmacao').modal('show')"
+		>
+			<i class="bi bi-trash"></i>
+		</button>
+		
 	</div>
 </div>
 
@@ -39,6 +48,62 @@
 		&nbsp;
 	</div>
 </div>
+
+<div class="modal" id='msg_confirmacao' tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body" id='msg_confirmacao_body'>
+		<div class="row">
+			<div class="col">
+				<p>Tem certeza que deseja excluir este registro ?</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<button
+					class="btn btn-light w-100"
+					onclick="$('#msg_confirmacao').modal('hide')"
+				>
+					Cancelar
+				</button>
+			</div>
+			<div class="col-4"></div>
+			<div class="col-4">
+				<button
+						onclick='excluir_aluno()'
+						class="btn btn-primary w-100">
+					Sim
+				</button>
+			</div>
+		</div>        
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	
+	function excluir_aluno(){
+		var id_para_excluir = ''
+		document
+			.querySelectorAll('.input_aluno')
+			.forEach((item) => {
+			if(item.name == 'id'){
+				id_para_excluir = item.value
+			}
+		})
+		
+		
+		$.ajax({
+			url: '/exclui_aluno',
+			type: 'POST',
+			data: JSON.stringify({id: id_para_excluir}),
+			contentType: "application/json",
+			dataType: "json",
+		}).done(function (data){
+			console.log(data)
+		})
+	}
+</script>
 
 <div class="modal" id='alert' tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
