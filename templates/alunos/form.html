@@ -168,9 +168,21 @@
 		
 		var meus_inputs = [{
 				label_innerHTML: 'Logradouro',
-				type: 'text',
+				type: 'select',
 				name: 'logradouro',
-				input_class: 'input_aluno'
+				input_class: 'input_aluno',
+				opts_arr: [
+					'rua',
+					'avenida',
+					'travessa',
+					'servidao'
+				],
+				opt_arr_innerHTML: [
+					'Rua',
+					'Avenida',
+					'Travessa',
+					'Servidão'
+				]
 			},{
 				label_innerHTML: 'Rua',
 				type: 'text',
