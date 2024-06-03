@@ -123,20 +123,27 @@
 				label_innerHTML: 'ID',
 				type: 'number',
 				name: 'id',
+				disabled: true,
 				input_class: 'input_aluno'
 			},{
 				label_innerHTML: 'Nome',
 				type: 'text',
 				name: 'nome',
+				required: true,
+				func_oninput: (e) => tira_is_invalid(e),
 				input_class: 'input_aluno'
 			},{
 				label_innerHTML: 'Sobrenome',
 				type: 'text',
+				required: true,
+				func_oninput: (e) => tira_is_invalid(e),
 				name: 'sobre_nome',
 				input_class: 'input_aluno'
 			},{
 				label_innerHTML: 'Nome do Pai',
 				type: 'text',
+				required: true,
+				func_oninput: (e) => tira_is_invalid(e),
 				name: 'nome_do_pai',
 				input_class: 'input_aluno'
 			},{

@@ -50,6 +50,10 @@ function para_select(item, parent){
 	$(parent).append(row)
 }
 
+function tira_is_invalid(elemento){
+	elemento.classList.remove('is-invalid')
+}
+
 function para_inputs(item, parent){
 	var row = document.createElement('div')
 	row.className = 'row mt-1'
@@ -58,11 +62,29 @@ function para_inputs(item, parent){
 	col.className = 'col'
 	
 	var label = document.createElement('label')
+	if(item.required){
+		item.label_innerHTML += `
+			<span style='color: red'>*</span>
+		`
+	}
 	label.innerHTML = item.label_innerHTML
 	
 	var input = document.createElement('input')
 	input.type = item.type
 	input.name = item.name	
+	if(item.disabled){
+		input.disabled = item.disabled
+	}
+	if(item.required){
+		input.required = item.required
+	}
+
+	if(item.func_oninput){
+		input.oninput = (e) => {
+			item.func_oninput(e.currentTarget)
+		}
+	}
+
 	input.className = 'form-control'
 	input.autocomplete = 'one-time-code'
 	input.classList.add(item.input_class)

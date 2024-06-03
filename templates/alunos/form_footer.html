@@ -40,13 +40,25 @@
 		
 		
 		var input_aluno = document.querySelectorAll('.input_aluno')
+		var input_aluno_len = input_aluno.length
 		var obj_para_lancar = {}
 		
 		input_aluno.forEach((input) => {
+			if(input.required  && input.value == ''){
+				input.classList.add('is-invalid')			
+			}
 			obj_para_lancar[input.name] = input.value
 		})
-		
-		
+
+		for(var i = 0 ; i < input_aluno_len; i++){
+			if(input_aluno[i].classList.contains('is-invalid')){
+				input_aluno[i].focus()
+				$('#btn_salvar_aluno').show()
+				$('#btn_salvando_aluno').hide()
+				return
+			}
+		}
+
 		$.ajax({
 			url: '/salvar_aluno',
 			type: 'POST',
