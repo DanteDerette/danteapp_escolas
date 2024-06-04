@@ -27,38 +27,56 @@
 
 <div class='row mt-2'>
 	<div class='col'>
-		<table class='table'>
-			<thead class=''>
+
+		<div id='tbody_aluno' >
+			<!-- <thead class=''>
 				<tr>
 					<th style='text-align: center; font-size: 1px; padding: 0px; margin: 0px;'>&nbsp;</th>
 				</tr>
-			</thead>
-			<tbody id='tbody_aluno'></tbody>
-		</table>
+			</thead> -->
+			<!-- <tbody id='tbody_aluno'></tbody> -->
+		</div>
+
 	</div>
 </div>
 
 <script>
 	function pesquisar_multiuso(elemento, id_do_tbody){
 		var valor_procurado = (elemento.value).toLowerCase()
-		document
-			.getElementById(id_do_tbody)
-			.querySelectorAll('tr')
-			.forEach((linha) => {
-				var valor_de_todas_as_celulas = ''
-				linha
-					.querySelectorAll('td')
-					.forEach((celula) => {
-						valor_de_todas_as_celulas += (celula.innerHTML).toLowerCase()
-					})
-				if(
-					valor_de_todas_as_celulas.includes(valor_procurado)
-				){
-					linha.style.display = 'table-row'
-				} else {
-					linha.style.display = 'none'
-				}
-			})
+		
+		var fake_tbody = document.getElementById(id_do_tbody)
+		
+		var todas_as_linhas = fake_tbody.getElementsByClassName('fake_tr')
+		var todas_as_linhas_len = todas_as_linhas.length
+		
+		for(var i = 0 ; i < todas_as_linhas_len ;i++){
+			var valor_de_todas_as_celulas = (todas_as_linhas[i].innerHTML).toLowerCase()
+			if(
+				valor_de_todas_as_celulas.includes(valor_procurado)
+			){
+				todas_as_linhas[i].style.display = 'block'
+			} else {
+				todas_as_linhas[i].style.display = 'none'
+			}
+		}
+
+
+
+		// document
+		// 	.getElementById(id_do_tbody)
+		// 	.querySelectorAll('div')
+		// 	.forEach((linha) => {
+				
+		// 		var valor_de_todas_as_celulas = (linha.innerHTML).toLowerCase()
+
+		// 		if(
+		// 			valor_de_todas_as_celulas.includes(valor_procurado)
+		// 		){
+		// 			linha.style.display = 'block'
+		// 		} else {
+		// 			linha.style.display = 'none'
+		// 		}
+		// 	})
 	}
 	function alterar_aluno(id_clicado){
 		$.ajax({
@@ -106,13 +124,10 @@
 			var dados = retorno.dados
 			dados.forEach((item) => {
 				// LINHA QUE APARECE PARA O USUÁRIO
-				var tr = document.createElement('tr')
+				var tr = document.createElement('div')
 				
-				tr.onclick = () => {
-					alterar_aluno(item[0])
-				}
-				
-				var td = document.createElement('td')
+				// var td = document.createElement('div')
+				tr.style.borderRadius = '15px'
 				var string_celula = "Nome:" + item[1]
 				string_celula += "<br>"
 				string_celula += "Sobrenome:" + item[2]
@@ -121,27 +136,28 @@
 				string_celula += "<br>"
 				string_celula += `
 					<div class='text-end'>
-						<button class="btn btn-outline-primary" style='border-radius: 0px;'>
-							<i class="bi bi-pencil-square"></i>
-						</button>
+						<button onclick="alterar_aluno('` + item[0] + `')" class="btn btn-outline-primary">Editar</button>
 					</div>
 					`
 				
-				td.innerHTML = string_celula
+				tr.innerHTML = string_celula
 				
-				td.classList.add('border')
+				tr.classList.add('border')
+				tr.classList.add('fake_tr')
+				tr.classList.add('m-3')
+				tr.classList.add('p-3')
 
-				tr.appendChild(td)
+				// tr.appendChild(td)
 				$('#tbody_aluno').append(tr)
 
 				// LINHA PARA SEPARAR UMA LINHA DA OUTRA
-				var tr = document.createElement('tr')
-				var td = document.createElement('td')
-				td.innerHTML = '&nbsp;'
-				td.style.fontSize = '1px'
-				tr.appendChild(td)
+				// var tr = document.createElement('div')
+				// var td = document.createElement('div')
+				// td.innerHTML = '&nbsp;'
+				// td.style.fontSize = '1px'
+				// tr.appendChild(td)
 				
-				$('#tbody_aluno').append(tr)
+				// $('#tbody_aluno').append(tr)
 				
 			})
 		})
