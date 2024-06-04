@@ -5,28 +5,39 @@
 		</h1>
 	</div>
 </div> -->
-<div class='row mt-2'>
-	<div class='col'>
-		<input
-			type="text"
-			class="form-control"
-			placeholder="Pesquisar"
-			oninput="pesquisar_multiuso(this, 'tbody_aluno')"
-		/>
+<div class="sticky_element pt-1 bg-white">
+	<div class='row mt-2'>
+		<div class='col'>
+			<input
+				type="text"
+				class="form-control"
+				placeholder="Pesquisar"
+				oninput="pesquisar_multiuso(this, 'tbody_aluno')"
+			/>
+		</div>
+	</div>	
+
+	<div class='row mt-2 pb-1 border-bottom'>
+		<div class='col text-center'>
+			<label style="font-size: large; font-weight: 600; text-align: center;">Tabela dos Alunos</label>
+		</div>
 	</div>
 </div>	
+
+
 <div class='row mt-2'>
 	<div class='col'>
 		<table class='table'>
-			<thead class='sticky_element bg-white'>
+			<thead class=''>
 				<tr>
-					<th style='text-align: center;'>Tabela dos Aluno</th>
+					<th style='text-align: center; font-size: 1px; padding: 0px; margin: 0px;'>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody id='tbody_aluno'></tbody>
 		</table>
 	</div>
 </div>
+
 <script>
 	function pesquisar_multiuso(elemento, id_do_tbody){
 		var valor_procurado = (elemento.value).toLowerCase()
@@ -49,7 +60,6 @@
 				}
 			})
 	}
-
 	function alterar_aluno(id_clicado){
 		$.ajax({
 			url: '/ler_aluno_especifico',
@@ -95,6 +105,7 @@
 			
 			var dados = retorno.dados
 			dados.forEach((item) => {
+				// LINHA QUE APARECE PARA O USUÁRIO
 				var tr = document.createElement('tr')
 				
 				tr.onclick = () => {
@@ -107,9 +118,29 @@
 				string_celula += "Sobrenome:" + item[2]
 				string_celula += "<br>"
 				string_celula += "CPF:" + item[7]
+				string_celula += "<br>"
+				string_celula += `
+					<div class='text-end'>
+						<button class="btn btn-outline-primary" style='border-radius: 0px;'>
+							<i class="bi bi-pencil-square"></i>
+						</button>
+					</div>
+					`
 				
 				td.innerHTML = string_celula
+				
+				td.classList.add('border')
+
 				tr.appendChild(td)
+				$('#tbody_aluno').append(tr)
+
+				// LINHA PARA SEPARAR UMA LINHA DA OUTRA
+				var tr = document.createElement('tr')
+				var td = document.createElement('td')
+				td.innerHTML = '&nbsp;'
+				td.style.fontSize = '1px'
+				tr.appendChild(td)
+				
 				$('#tbody_aluno').append(tr)
 				
 			})
