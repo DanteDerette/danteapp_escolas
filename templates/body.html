@@ -6,55 +6,9 @@
 		<div class='col table_aluno'>
 			{% include 'alunos/table.html' %}
 		</div>
-		<div class="modal" id='msg_confirmacao' tabindex="-1">
-			<input type="hidden" id="msg_confirmacao_argumento" />
-			<div class="modal-dialog modal-dialog-centered">
-			  <div class="modal-content">
-				<div class="modal-body" id='msg_confirmacao_body'>
-				  <div class="row">
-					  <div class="col">
-						  <p>Tem certeza que deseja excluir este registro ?</p>
-					  </div>
-				  </div>
-				  <div class="row">
-					  <div class="col-4">
-						  <button
-							  class="btn btn-light w-100"
-							  onclick="$('#msg_confirmacao').modal('hide')"
-						  >
-							  Cancelar
-						  </button>
-					  </div>
-					  <div class="col-4"></div>
-					  <div class="col-4">
-						  <button
-								  onclick='excluir_aluno(document.getElementById("msg_confirmacao_argumento").value)'
-								  class="btn btn-primary w-100">
-							  Sim
-						  </button>
-					  </div>
-				  </div>        
-				</div>
-			  </div>
-			</div>
-		</div>
-		<script>
-			function abre_msg_confirmacao(arg){
-				$('#msg_confirmacao').modal('show')
-				$('#msg_confirmacao_argumento').val(arg)
-			}
-				function excluir_aluno(id_para_excluir){
-					$.ajax({
-						url: '/exclui_aluno',
-						type: 'POST',
-						data: JSON.stringify({id: id_para_excluir}),
-						contentType: "application/json",
-						dataType: "json",
-					}).done(function (data){
-						console.log(data)
-					})
-				}
-		</script>
+		{% include 'multiuso/alert.html' %}
+		{% include 'multiuso/confirma_exclusao.html' %}
+
 	</div>
 	<div class='row' id='footer'>
 		<div class='col form_aluno'>

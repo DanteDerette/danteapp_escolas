@@ -1,0 +1,17 @@
+<div class="modal" id='alert' tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+            <div class="modal-body" id='alert_body'>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function show_alert(msg, tempo = 1800){
+        $('#alert').modal('show')
+        $('#alert_body').html(msg)
+        setTimeout(function (){
+            $('#alert').modal('hide')
+        }, tempo)
+    }
+</script>

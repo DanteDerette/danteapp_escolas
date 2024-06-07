@@ -68,24 +68,18 @@
 		}).done(function (data){
 			$('#btn_salvar_aluno').show()
 			$('#btn_salvando_aluno').hide()
-			
-			$('#alert').modal('show')
-			$('#alert_body').html(`
-				<button class="btn btn-success w-100">
-					Salvo com Sucesso!
-				</button>
-			`)
+
+			var msg = `
+            	<button class="btn btn-success w-100">
+	                Salvo com Sucesso!
+            	</button>
+        	`
+			show_alert(msg)
 			
 			setTimeout(function (){
-				$('#alert').modal('hide')
 				navegar_form_para_table_aluno()
 				gera_table_aluno()
 			}, 2000)
-			
-			
-			
 		})
-		  
-
 	}
 </script>

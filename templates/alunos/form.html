@@ -14,7 +14,12 @@
 	<div class='col-2'>
 		<button
 			class="btn btn-danger w-100"
-			onclick="abre_msg_confirmacao(document.querySelectorAll('.input_aluno')[0].value)"
+			onclick="abre_msg_confirmacao(
+					document.querySelectorAll('.input_aluno')[0].value,
+					'/exclui_aluno',
+					'Confirma a Exclusão do Aluno ?'
+				) 
+			"
 		>
 			<i class="bi bi-trash"></i>
 		</button>		
@@ -48,23 +53,8 @@
 	</div>
 </div>
 
-
 <script>
 	
-
-</script>
-
-<div class="modal" id='alert' tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body" id='alert_body'>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
 
 	
 	$( document ).ready(function() {

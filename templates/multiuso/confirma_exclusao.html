@@ -1,0 +1,53 @@
+<div class="modal" id='modal_confirma_exclusao' tabindex="-1">
+    <input type="hidden" id="modal_argumento_confirma_exclusao" />
+    <input type="hidden" id="modal_rota_confirma_exclusao" />
+
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+              <div class="col" id='msg_confirmacao_body'></div>
+          </div>
+          <div class="row">
+              <div class="col-4">
+                  <button
+                      class="btn btn-light w-100"
+                      onclick="$('#modal_confirma_exclusao').modal('hide')"
+                  >
+                      Cancelar
+                  </button>
+              </div>
+              <div class="col-4"></div>
+              <div class="col-4">
+                  <button
+                          onclick='excluir()'
+                          class="btn btn-primary w-100">
+                      Sim
+                  </button>
+              </div>
+          </div>        
+        </div>
+      </div>
+    </div>
+    <script>
+        function abre_msg_confirmacao(arg, rota, msg_body){
+            console.log(arg)
+            $('#modal_confirma_exclusao').modal('show')
+            $('#modal_argumento_confirma_exclusao').val(arg)
+            $('#modal_rota_confirma_exclusao').val(rota)
+            $('#msg_confirmacao_body').html(msg_body)
+        }
+        function excluir(){
+            console.log($("#modal_argumento_confirma_exclusao").val())
+            $.ajax({
+                url: $("#modal_rota_confirma_exclusao").val(),
+                type: 'POST',
+                data: JSON.stringify({id: $("#modal_argumento_confirma_exclusao").val()}),
+                contentType: "application/json",
+                dataType: "json",
+            }).done(function (data){
+                console.log(data)
+            })
+        }
+    </script>
+</div>
