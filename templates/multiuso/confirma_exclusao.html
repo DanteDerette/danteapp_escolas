@@ -33,7 +33,11 @@
         function abre_msg_confirmacao(arg, rota, msg_body){
             console.log(arg)
             $('#modal_confirma_exclusao').modal('show')
+            
+            
             $('#modal_argumento_confirma_exclusao').val(arg)
+
+
             $('#modal_rota_confirma_exclusao').val(rota)
             $('#msg_confirmacao_body').html(msg_body)
         }

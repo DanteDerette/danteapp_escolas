@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, g
 import sqlite3
 
 app = Flask(__name__)
@@ -7,12 +7,26 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.before_request
+def before_request():
+    g.conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    g.cursor = g.conn.cursor()
+
+    print("Antes")
+
+@app.after_request
+def after_request(response):
+    print("Depois")
+    g.conn.commit()
+    g.conn.close()
+    return response
+
 @app.route("/salvar_aluno", methods=['POST'])
 def salvar_aluno():
     dict = request.get_json()
             
-    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    # cursor = conn.cursor()
     
     ## Quando é Alterar tem ID
     ## Quando é Inserir não ID
@@ -34,7 +48,7 @@ def salvar_aluno():
                 cep            
             ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);"""
         
-        cursor.execute(SQL,
+        g.cursor.execute(SQL,
             (
                 dict['nome'],
                 dict['sobre_nome'],
@@ -68,7 +82,7 @@ def salvar_aluno():
                     estado = ?,
                     cep = ?         
                 WHERE id = ?;"""
-        cursor.execute(SQL,
+        g.cursor.execute(SQL,
             (
                 dict['nome'],
                 dict['sobre_nome'],
@@ -88,55 +102,57 @@ def salvar_aluno():
         )
         
     
-    conn.commit()
-    conn.close()
+    # conn.commit()
+    # conn.close()
     return jsonify(retorno="Sucesso")
   
 @app.route("/ler_todos_alunos", methods=['POST'])
 def ler_todos_alunos():
-    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    # cursor = conn.cursor()
     SQL = """ SELECT * FROM alunos;"""
     
-    cursor.execute(SQL)
-    dados = cursor.fetchall()
-    print(dados)
+    g.cursor.execute(SQL)
+    dados = g.cursor.fetchall()
     
-    conn.close()
+    # conn.close()
     return jsonify(dados=dados)
 
 @app.route("/exclui_aluno", methods=['POST'])
 def exclui_aluno():
     dict = request.get_json()
-    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
-    cursor = conn.cursor()
+
+    # conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    # cursor = conn.cursor()
     SQL = """ DELETE FROM alunos WHERE id=""" + str(dict['id']) + """;"""
-    cursor.execute(SQL)
-    conn.commit()
+
+    g.cursor.execute(SQL)
     
-    conn.close()
+    # conn.commit()
+    # conn.close()
     return jsonify(x=0)
 
 @app.route("/ler_aluno_especifico", methods=['POST'])
 def ler_aluno_especifico():
     dict = request.get_json()
-    conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
-    cursor = conn.cursor()
+
+    # conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
+    # cursor = conn.cursor()
+
     SQL = """ SELECT * FROM alunos WHERE id=""" + str(dict['id']) + """;"""
-    cursor.execute(SQL)
-    dados = cursor.fetchall()
+    g.cursor.execute(SQL)
+    dados = g.cursor.fetchall()
     
     SQL = """ PRAGMA table_info(alunos);"""
-    cursor.execute(SQL)
-    cabecalho = cursor.fetchall()
+    g.cursor.execute(SQL)
+    cabecalho = g.cursor.fetchall()
     
         
-    conn.close()
+    # conn.close()
     return jsonify(
         dados=dados,
         cabecalho=cabecalho
     )
-
 
 
 app.run(debug=True, host='0.0.0.0')
