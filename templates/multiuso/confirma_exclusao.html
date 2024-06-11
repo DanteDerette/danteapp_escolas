@@ -1,6 +1,8 @@
 <div class="modal" id='modal_confirma_exclusao' tabindex="-1">
+
     <input type="hidden" id="modal_argumento_confirma_exclusao" />
     <input type="hidden" id="modal_rota_confirma_exclusao" />
+    <input type="hidden" id="func_retorno" />
 
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -30,15 +32,12 @@
       </div>
     </div>
     <script>
-        function abre_msg_confirmacao(arg, rota, msg_body){
-            console.log(arg)
+        function abre_msg_confirmacao(arg, rota, msg_body, func_retorno){
             $('#modal_confirma_exclusao').modal('show')
-            
-            
             $('#modal_argumento_confirma_exclusao').val(arg)
-
-
             $('#modal_rota_confirma_exclusao').val(rota)
+            $('#func_retorno').val(func_retorno)
+            
             $('#msg_confirmacao_body').html(msg_body)
         }
         function excluir(){
@@ -50,7 +49,8 @@
                 contentType: "application/json",
                 dataType: "json",
             }).done(function (data){
-                console.log(data)
+                $('#modal_confirma_exclusao').modal('hide')
+                window[$('#func_retorno').val()]();
             })
         }
     </script>

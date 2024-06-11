@@ -6,175 +6,176 @@
 	</div>
 </div> -->
 <div class="sticky_element pt-1 bg-white">
-	<div class='row mt-2'>
-		<div class='col'>
-			<input
-				type="text"
-				class="form-control"
-				placeholder="Pesquisar"
-				oninput="pesquisar_multiuso(this, 'tbody_aluno')"
-			/>
-		</div>
-	</div>	
+  <div class="row mt-2">
+    <div class="col">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquisar"
+        oninput="pesquisar_multiuso(this, 'tbody_aluno')"
+      />
+    </div>
+  </div>
 
-	<div class='row mt-2 pb-1 border-bottom'>
-		<div class='col text-center'>
-			<label style="font-size: large; font-weight: 600; text-align: center;">Tabela dos Alunos</label>
-		</div>
-	</div>
-</div>	
+  <div class="row mt-2 pb-1 border-bottom">
+    <div class="col text-center">
+      <label style="font-size: large; font-weight: 600; text-align: center"
+        >Tabela dos Alunos</label
+      >
+    </div>
+  </div>
+</div>
 
-
-<div class='row mt-2'>
-	<div class='col'>
-
-		<div id='tbody_aluno' >
-			<!-- <thead class=''>
+<div class="row mt-2">
+  <div class="col">
+    <div id="tbody_aluno">
+      <!-- <thead class=''>
 				<tr>
 					<th style='text-align: center; font-size: 1px; padding: 0px; margin: 0px;'>&nbsp;</th>
 				</tr>
 			</thead> -->
-			<!-- <tbody id='tbody_aluno'></tbody> -->
-		</div>
-
-	</div>
+      <!-- <tbody id='tbody_aluno'></tbody> -->
+    </div>
+  </div>
 </div>
 
 <script>
-	function pesquisar_multiuso(elemento, id_do_tbody){
-		var valor_procurado = (elemento.value).toLowerCase()
-		
-		var fake_tbody = document.getElementById(id_do_tbody)
-		
-		var todas_as_linhas = fake_tbody.getElementsByClassName('fake_tr')
-		var todas_as_linhas_len = todas_as_linhas.length
-		
-		for(var i = 0 ; i < todas_as_linhas_len ;i++){
-			var valor_de_todas_as_celulas = (todas_as_linhas[i].innerHTML).toLowerCase()
-			if(
-				valor_de_todas_as_celulas.includes(valor_procurado)
-			){
-				todas_as_linhas[i].style.display = 'block'
-			} else {
-				todas_as_linhas[i].style.display = 'none'
-			}
-		}
+  function pesquisar_multiuso(elemento, id_do_tbody) {
+    var valor_procurado = elemento.value.toLowerCase();
 
+    var fake_tbody = document.getElementById(id_do_tbody);
 
+    var todas_as_linhas = fake_tbody.getElementsByClassName("fake_tr");
+    var todas_as_linhas_len = todas_as_linhas.length;
 
-		// document
-		// 	.getElementById(id_do_tbody)
-		// 	.querySelectorAll('div')
-		// 	.forEach((linha) => {
-				
-		// 		var valor_de_todas_as_celulas = (linha.innerHTML).toLowerCase()
+    for (var i = 0; i < todas_as_linhas_len; i++) {
+      var valor_de_todas_as_celulas =
+        todas_as_linhas[i].innerHTML.toLowerCase();
+      if (valor_de_todas_as_celulas.includes(valor_procurado)) {
+        todas_as_linhas[i].style.display = "block";
+      } else {
+        todas_as_linhas[i].style.display = "none";
+      }
+    }
 
-		// 		if(
-		// 			valor_de_todas_as_celulas.includes(valor_procurado)
-		// 		){
-		// 			linha.style.display = 'block'
-		// 		} else {
-		// 			linha.style.display = 'none'
-		// 		}
-		// 	})
-	}
-	function alterar_aluno(id_clicado){
-		$.ajax({
-			url: '/ler_aluno_especifico',
-			type: 'POST',
-			data: JSON.stringify({id: id_clicado}),
-			contentType: "application/json",
-			dataType: "json",
-		}).done(function (data){
-			navegar_table_para_form_aluno()			
-			capta_e_direciona_dados(data)
-			})
-	}
-	function capta_e_direciona_dados(data){
-		var dados_para_escrever = data.dados[0]
-		var cabecalho = data.cabecalho
-		var input_aluno = document.querySelectorAll('.input_aluno')
-			
-		// Loop em todo o cabecalho
-		cabecalho.forEach((item, index) => {
-			// passar por todos os elementos
-			// com a classe: input_aluno
-			input_aluno.forEach((item_2, index_2) => {
-				// Perguntar 1 por 1
-				// Se o nome do elemento é igual
-				// Ao nome do cabecalho
-				if(item_2.name == item[1]){	
-					// Determina o valor do elemento
-					// De acordo com o que voltou do Flask
-					item_2.value = dados_para_escrever[index]
-				}
-			})
-		})
-		
-	}
-	
-	function gera_table_aluno(){
-		// LEITURA DOS DADOS
-		$.ajax({
-			url: '/ler_todos_alunos',
-			type: 'POST'			
-		}).done(function (retorno){
-			$('#tbody_aluno').html('')
-			
-			var dados = retorno.dados
-			dados.forEach((item) => {
-				// LINHA QUE APARECE PARA O USUÁRIO
-				var tr = document.createElement('div')
-				
-				// var td = document.createElement('div')
-				tr.style.borderRadius = '15px'
-				var string_celula = "Nome:" + item[1]
-				string_celula += "<br>"
-				string_celula += "Sobrenome:" + item[2]
-				string_celula += "<br>"
-				string_celula += "CPF:" + item[7]
-				string_celula += "<br>"
-				
-				string_celula += `
+    // document
+    // 	.getElementById(id_do_tbody)
+    // 	.querySelectorAll('div')
+    // 	.forEach((linha) => {
+
+    // 		var valor_de_todas_as_celulas = (linha.innerHTML).toLowerCase()
+
+    // 		if(
+    // 			valor_de_todas_as_celulas.includes(valor_procurado)
+    // 		){
+    // 			linha.style.display = 'block'
+    // 		} else {
+    // 			linha.style.display = 'none'
+    // 		}
+    // 	})
+  }
+  function alterar_aluno(id_clicado) {
+    $.ajax({
+      url: "/ler_aluno_especifico",
+      type: "POST",
+      data: JSON.stringify({ id: id_clicado }),
+      contentType: "application/json",
+      dataType: "json",
+    }).done(function (data) {
+      navegar_table_para_form_aluno();
+      capta_e_direciona_dados(data);
+    });
+  }
+  function capta_e_direciona_dados(data) {
+    var dados_para_escrever = data.dados[0];
+    var cabecalho = data.cabecalho;
+    var input_aluno = document.querySelectorAll(".input_aluno");
+
+    // Loop em todo o cabecalho
+    cabecalho.forEach((item, index) => {
+      // passar por todos os elementos
+      // com a classe: input_aluno
+      input_aluno.forEach((item_2, index_2) => {
+        // Perguntar 1 por 1
+        // Se o nome do elemento é igual
+        // Ao nome do cabecalho
+        if (item_2.name == item[1]) {
+          // Determina o valor do elemento
+          // De acordo com o que voltou do Flask
+          item_2.value = dados_para_escrever[index];
+        }
+      });
+    });
+  }
+
+  function gera_table_aluno() {
+    // LEITURA DOS DADOS
+    $.ajax({
+      url: "/ler_todos_alunos",
+      type: "POST",
+    }).done(function (retorno) {
+      $("#tbody_aluno").html("");
+
+      var dados = retorno.dados;
+      dados.forEach((item) => {
+        // LINHA QUE APARECE PARA O USUÁRIO
+        var tr = document.createElement("div");
+
+        // var td = document.createElement('div')
+        tr.style.borderRadius = "15px";
+        var string_celula = "Nome:" + item[1];
+        string_celula += "<br>";
+        string_celula += "Sobrenome:" + item[2];
+        string_celula += "<br>";
+        string_celula += "CPF:" + item[7];
+        string_celula += "<br>";
+
+        string_celula +=
+          `
 					<div class='text-end'>
 						<button
 							class="btn btn-outline-danger"
-							onclick="abre_msg_confirmacao('` + item[0] + `')"
-						>
+							onclick="abre_msg_confirmacao(
+								'` + item[0] +`',
+								'/exclui_aluno',
+								'Confirma a Exclusão do Aluno ?',
+								'gera_table_aluno'
+							)">
 							<i class="bi bi-trash"></i>
 						</button>	
 
-						<button onclick="alterar_aluno('` + item[0] + `')" class="btn btn-outline-primary">
+						<button onclick="alterar_aluno('` +
+          item[0] +
+          `')" class="btn btn-outline-primary">
 							<i class="bi bi-pencil-square"></i>
 						</button>
 
 					</div>
-					`
-				
-				tr.innerHTML = string_celula
-				
-				tr.classList.add('border')
-				tr.classList.add('fake_tr')
-				tr.classList.add('m-3')
-				tr.classList.add('p-3')
+					`;
 
-				// tr.appendChild(td)
-				$('#tbody_aluno').append(tr)
+        tr.innerHTML = string_celula;
 
-				// LINHA PARA SEPARAR UMA LINHA DA OUTRA
-				// var tr = document.createElement('div')
-				// var td = document.createElement('div')
-				// td.innerHTML = '&nbsp;'
-				// td.style.fontSize = '1px'
-				// tr.appendChild(td)
-				
-				// $('#tbody_aluno').append(tr)
-				
-			})
-		})
-	}
-	
-	$( document ).ready(function() {
-		gera_table_aluno()
-	});
+        tr.classList.add("border");
+        tr.classList.add("fake_tr");
+        tr.classList.add("m-3");
+        tr.classList.add("p-3");
+
+        // tr.appendChild(td)
+        $("#tbody_aluno").append(tr);
+
+        // LINHA PARA SEPARAR UMA LINHA DA OUTRA
+        // var tr = document.createElement('div')
+        // var td = document.createElement('div')
+        // td.innerHTML = '&nbsp;'
+        // td.style.fontSize = '1px'
+        // tr.appendChild(td)
+
+        // $('#tbody_aluno').append(tr)
+      });
+    });
+  }
+
+  $(document).ready(function () {
+    gera_table_aluno();
+  });
 </script>
