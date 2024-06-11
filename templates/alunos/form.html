@@ -59,7 +59,14 @@
 
 	
 	$( document ).ready(function() {
-		var meus_inputs = [{
+		var meus_inputs = [
+			{
+				label_innerHTML: 'Foto do Aluno',
+				type: 'file',
+				name: 'foto',				
+				input_class: 'input_aluno'
+			},
+			{
 				label_innerHTML: 'ID',
 				type: 'number',
 				name: 'id',
