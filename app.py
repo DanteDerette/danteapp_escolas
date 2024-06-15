@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify, g, redirect, url_for, send_from_directory
 import sqlite3
+import os
 
 app = Flask(__name__)
+app.config['UPLOAD_PATH'] = 'uploads'
 
 @app.route("/")
 def index():
@@ -106,6 +108,15 @@ def salvar_aluno():
     # conn.close()
     return jsonify(retorno="Sucesso")
   
+@app.route("/atualiza_foto", methods=['POST'])
+def atualiza_foto():
+    print(request.form['id_do_aluno'] )
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], request.form['id_do_aluno'] + '.png'))
+        
+    return redirect('/')
+
 @app.route("/ler_todos_alunos", methods=['POST'])
 def ler_todos_alunos():
     # conn = sqlite3.connect('banco_de_dados/banco_de_dados.db')
@@ -154,5 +165,8 @@ def ler_aluno_especifico():
         cabecalho=cabecalho
     )
 
+@app.route('/uploads/<filename>')
+def upload(filename):
+    return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 app.run(debug=True, host='0.0.0.0')
