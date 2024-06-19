@@ -88,6 +88,7 @@
   }
   function capta_e_direciona_dados(data) {
     var dados_para_escrever = data.dados[0];
+	
     var cabecalho = data.cabecalho;
     var input_aluno = document.querySelectorAll(".input_aluno");
 
@@ -106,6 +107,10 @@
         }
       });
     });
+	
+	console.log(dados_para_escrever)
+	
+	document.getElementById("recebe_foto").src = "/uploads/" + dados_para_escrever[0] + ".png"
   }
 
   function gera_table_aluno() {
