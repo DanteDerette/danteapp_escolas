@@ -111,6 +111,14 @@
 	console.log(dados_para_escrever)
 	
 	document.getElementById("recebe_foto").src = "/uploads/" + dados_para_escrever[0] + ".png"
+
+  document.getElementById("recebe_foto").style.display = 'flex'
+
+  document.getElementById("recebe_foto").onerror = () => {
+    document.getElementById("recebe_foto").style.display = 'none'
+  }
+
+  
   }
 
   function gera_table_aluno() {
