@@ -113,9 +113,11 @@
 	document.getElementById("recebe_foto").src = "/uploads/" + dados_para_escrever[0] + ".png"
 
   document.getElementById("recebe_foto").style.display = 'flex'
+  document.getElementById("msg_recebe_foto").style.display = 'none'
 
   document.getElementById("recebe_foto").onerror = () => {
     document.getElementById("recebe_foto").style.display = 'none'
+    document.getElementById("msg_recebe_foto").style.display = 'flex'
   }
 
   
